@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class NewtonRaphson{
+private:
+    double a;
+    double tolerance;
+public:
+    NewtonRaphson(double fi, double tol) : a(fi),tolerance(tol){}
+
+    double calculateValue(double x) {
+        return pow(x, 2) - 2 * x - 4;
+    }
+    double DifferentionValue(double x) {
+        return 2 * x - 2;
+    }
+
+    int i = 0;
+    void Iteration() {
+        double x = a - (calculateValue(x) / DifferentionValue(x));
+        while(fabs(a-x) > tolerance) {
+            a = x;
+            x = a - (calculateValue(x) / DifferentionValue(x));
+            printf("The New Value of x%d = %.6f\n", i, x);
+            i++;
+        }
+
+        printf("The Final Root is = %f\n" ,x);
+    }
+};
+
+int main() {
+    srand((unsigned) time(NULL));
+
+    double a = rand()%10 - 5;
+    double tolerance = 0.0001;
+
+    cout << "a = " << a << '\n';
+
+    NewtonRaphson nwtr = NewtonRaphson(a, tolerance);
+
+    nwtr.Iteration();
+}
