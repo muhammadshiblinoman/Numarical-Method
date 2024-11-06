@@ -15,7 +15,7 @@ public:
         return 2 * x - 2;
     }
 
-    int i = 0;
+    int i = 1;
     void Iteration() {
         double x = a - (calculateValue(x) / DifferentionValue(x));
         while(fabs(a-x) > tolerance) {
