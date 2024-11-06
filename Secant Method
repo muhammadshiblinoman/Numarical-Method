@@ -3,42 +3,42 @@ using namespace std;
 
 class SecantMethod{
 private:
-    double a;
-    double b;
+    double x1;
+    double x2;
     double tolerance;
 public:
     SecantMethod(double fi, double se, double tol) 
-                        : a(fi), b(se), tolerance(tol){}
+                        : x1(fi), x2(se), tolerance(tol){}
 
     double calculateValue(double x) {
         return pow(x, 2) - 2 * x - 4;
     }
 
-    int i = 2;
+    int i = 3;
     void Iteration() {
-        double x = a-(calculateValue(a)*(a-b)/(calculateValue(a)-calculateValue(b)));
-        while(fabs(a-b) > tolerance) {
-            a = b;
-            b = x;
-            x = x = a-(calculateValue(a)*(a-b)/(calculateValue(a)-calculateValue(b)));
-            printf("The New Value of x%d = %.6f\n", i, x);
+        double newX = x1-(calculateValue(x1)*(x1-x2)/(calculateValue(x1)-calculateValue(x2)));
+        while(fabs(x1 - x2) > tolerance) {
+            x1 = x2;
+            x2 = newX;
+            newX = x1-(calculateValue(x1)*(x1-x2)/(calculateValue(x1)-calculateValue(x2)));
+            printf("The New Value of x%d = %.6f\n", i, newX);
             i++;
         }
 
-        printf("The Final Root is = %f\n" ,x);
+        printf("The Final Root is = %f\n" ,newX);
     }
 };
 
 int main() {
     srand((unsigned) time(NULL));
 
-    double a = rand()%10 - 5;
-    double b = a + rand()%10 + 3;
+    double x1 = rand()%10 - 5;
+    double x2 = x1 + rand()%10 + 3;
     double tolerance = 0.0001;
 
-    cout << "a = " << a << " b = " << b << '\n';
+    cout << "x1 = " << x1 << " x2 = " << x2 << '\n';
 
-    SecantMethod secM = SecantMethod(a, b, tolerance);
+    SecantMethod nwtr = SecantMethod(x1, x2, tolerance);
 
-    secM.Iteration();
+    nwtr.Iteration();
 }
