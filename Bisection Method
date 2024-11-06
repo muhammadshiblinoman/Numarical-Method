@@ -25,7 +25,7 @@ public:
             return;
         }
         double mid;
-        while(true) {
+        while(fabs(b - a) >= tolerance) {
             mid = (a+b) / 2.0;
 
             if(ValueClaculate(mid) == 0.0) {
@@ -38,10 +38,6 @@ public:
 
             printf("Value of new X%d =  %f\n", i, mid);
             i++;
-
-            if (fabs(b - a) < tolerance) {
-                break;
-            }
         }
     printf("Final Root is =  %f\n",mid);
     }
