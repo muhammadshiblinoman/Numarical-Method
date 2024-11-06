@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class SecantMethod{
+private:
+    double a;
+    double b;
+    double tolerance;
+public:
+    SecantMethod(double fi, double se, double tol) 
+                        : a(fi), b(se), tolerance(tol){}
+
+    double calculateValue(double x) {
+        return pow(x, 2) - 2 * x - 4;
+    }
+
+    int i = 2;
+    void Iteration() {
+        double x = a-(calculateValue(a)*(a-b)/(calculateValue(a)-calculateValue(b)));
+        while(fabs(a-b) > tolerance) {
+            a = b;
+            b = x;
+            x = x = a-(calculateValue(a)*(a-b)/(calculateValue(a)-calculateValue(b)));
+            printf("The New Value of x%d = %.6f\n", i, x);
+            i++;
+        }
+
+        printf("The Final Root is = %f\n" ,x);
+    }
+};
+
+int main() {
+    srand((unsigned) time(NULL));
+
+    double a = rand()%10 - 5;
+    double b = a + rand()%10 + 3;
+    double tolerance = 0.0001;
+
+    cout << "a = " << a << " b = " << b << '\n';
+
+    SecantMethod secM = SecantMethod(a, b, tolerance);
+
+    secM.Iteration();
+}
