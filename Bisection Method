@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class BisectionMethod{
+private:
+    double a;
+    double b;
+    double tolerance;
+
+public:
+
+    BisectionMethod(double fi, double se, double e) 
+                        : a(fi), b(se), tolerance(e){}
+
+    double ValueClaculate(double x) {
+        return pow(x,2) - 2*x - 4;
+    }
+
+    void Iteration() {
+
+        int i = 1;
+
+        if(ValueClaculate(a) * ValueClaculate(b) >= 0) {
+            cout << "The function has the same sign at the endpoints a and b.\n";
+            return;
+        }
+        double mid;
+        while(true) {
+            mid = (a+b) / 2.0;
+
+            if(ValueClaculate(mid) == 0.0) {
+                break;
+            } else if(ValueClaculate(mid)*ValueClaculate(a) < 0.0) {
+                b = mid;
+            } else {
+                a = mid;
+            }
+
+            printf("Value of new X%d =  %f\n", i, mid);
+            i++;
+
+            if (fabs(b - a) < tolerance) {
+                break;
+            }
+        }
+    printf("Final Root is =  %f\n",mid);
+    }
+};
+
+int main() {
+    srand((unsigned) time(NULL));
+
+    double a = rand() % 10 - 5;
+    double b = a + rand() % 10 + 3;
+    double e = 0.001;
+
+    cout << "a = " << a << " b = " << b << '\n';
+
+    BisectionMethod bisce = BisectionMethod(a, b, e);
+
+    if(bisce.ValueClaculate(a)*bisce.ValueClaculate(b) < 0) {
+        bisce.Iteration();
+    }
+}
