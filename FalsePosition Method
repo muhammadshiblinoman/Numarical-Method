@@ -18,7 +18,7 @@ public:
     void Iteration() {
         double x;
 
-        while(true) {
+        while(fabs(calculateValue(x)) >= tolerance) {
             double fa = calculateValue(a);
             double fb = calculateValue(b);
 
@@ -31,11 +31,6 @@ public:
             } else {
                 a = x;
             }
-
-            if (fabs(calculateValue(x)) <= tolerance) {
-                break;
-            }
-
             printf("The New Value of x%d = %.6f\n", i, x);
             i++;
         }
