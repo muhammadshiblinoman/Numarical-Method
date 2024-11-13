@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class PolynomialInterpolation{
+public:
+    double factorial(int n) {
+        double fact = 1;
+        for (int i = 2; i <= n; i++) {
+            fact *= i;
+        }
+        return fact;
+    }
+
+    void forwardDifferenceTable(vector<vector<double>>&table, int n) {
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < n - i; j++) {
+                table[j][i] = table[j + 1][i - 1] - table[j][i - 1];
+            }
+        }
+    }
+
+    double interpolate(double x, vector<double>&xValues, vector<vector<double>>&table, int n) {
+        double h = xValues[1] - xValues[0];
+        double p = (x - xValues[0]) / h;
+        double result = table[0][0];
+        double pTerm = 1.0;
+
+        for (int i = 1; i < n; i++) {
+            pTerm *= (p - (i - 1));
+            result += (pTerm * table[0][i]) / factorial(i);
+        }
+
+        return result;
+    }
+};
+
+int main() {
+    PolynomialInterpolation plyint = PolynomialInterpolation();
+    int n;
+    cin >> n;
+
+    vector<double> xValues(n);
+    vector<vector<double>> table(n, vector<double>(n, 0.0));
+
+    for (int i = 0; i < n; i++) {
+        cin >> xValues[i];
+    }
+
+    for (int i = 0; i < n; i++) {
+        cin >> table[i][0]; 
+    }
+
+    plyint.forwardDifferenceTable(table, n);
+
+    double x;
+    cin >> x;
+
+    double result = plyint.interpolate(x, xValues, table, n);
+    cout << "Interpolated value at x = " << x << " is " << result << '\n';
+
+    return 0;
+}
