@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class LagrangeInterpolation{
+public:
+    double ValueClaculate(double x, vector<pair<double,double>>&Values, int ind, int n) {
+        double pValue = 1.0, qValue = 1.0;
+        for(int i = 0; i < n; i++) {
+            if(i == ind) continue;
+
+            pValue *= (x - Values[i].first);
+            qValue *= (Values[ind].first - Values[i].first);
+        }
+
+        return (pValue / qValue) * Values[ind].second;
+    }
+
+    void Interpolation(int n, vector<pair<double,double>>&Values, double x) {
+        double ans = 0;
+
+        for(int i = 0; i < n; i++) {
+            double a = ValueClaculate(x, Values, i, n);
+            ans += a;
+            cout << ans << "\n";
+        }
+
+        printf("The value of y(%.1lf) is = %lf", x, ans);
+    }
+};
+
+int main() {
+    LagrangeInterpolation lgrangInter;
+
+    int n;
+    cin >> n;
+    vector<pair<double,double>>Values(n);
+    for(int i = 0; i < n; i++){
+        cin >> Values[i].first;
+    }
+    for(int i = 0; i < n; i++)
+        cin >> Values[i].second;
+
+
+    double x;
+    cin >> x;
+
+    lgrangInter.Interpolation(n, Values, x);
+}
