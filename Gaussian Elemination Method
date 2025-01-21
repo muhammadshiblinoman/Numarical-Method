@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class GaussianElemination {
+private:
+    int rows, cols;
+    vector<vector<double>>matrix;
+public:
+    GaussianElemination(int n, int m): rows(n), cols(m) {
+        matrix.resize(rows, vector<double>(cols, 0.0));
+    }
+
+    void inputMatrix() {
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++) {
+                cin >> matrix[i][j];
+            }
+        }
+    }
+
+    void Elemination() {
+        for(int i = 0; i < rows; i++) {
+            int maxRow = i;
+
+            for(int j = i+1; j < rows; j++) {
+                if(abs(matrix[j][i]) > abs(matrix[maxRow][i])) {
+                    maxRow = j;
+                }
+            }
+
+            swap(matrix[i], matrix[maxRow]);
+
+            for(int k = i+1; k < rows; k++) {
+                double factor = matrix[k][i] / matrix[i][i];
+                for(int j = i; j < cols; j++) {
+                    matrix[k][j] -= (factor * matrix[i][j]);
+                }
+            } 
+        }
+    }
+
+    vector<double> backSubstitution() {
+        vector<double> solution(rows, 0.0);
+        for (int i = rows - 1; i >= 0; --i) {
+            solution[i] = matrix[i][cols - 1];
+            for (int j = i + 1; j < rows; ++j) {
+                solution[i] -= matrix[i][j] * solution[j];
+            }
+            solution[i] /= matrix[i][i];
+        }
+        return solution;
+    }
+};
+
+int main() {
+    int n;
+    cin >> n;
+
+    GaussianElemination gass(n, n+1);
+    gass.inputMatrix();
+    gass.Elemination();
+
+    vector<double>ans = gass.backSubstitution();
+
+    for(auto u: ans) {
+        cout << u << "\n";
+    }
+}
