@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Simpson1_3Rule{
+private:
+	int rows;
+	vector<pair<double, double>>tables;
+
+public:
+	Simpson1_3Rule(int n) : rows(n+1) {
+		tables.resize(rows);
+	}
+
+	void InputValues() {
+		for(int i = 0;i < rows; i++) {
+			cin >> tables[i].first;
+			cin >> tables[i].second;
+		}
+	}
+
+	double calculateValue() {
+		double h = (tables[rows-1].first - tables[0].first) / (rows-1);
+
+		double ans = (tables[rows-1].second + tables[0].second);
+
+		for(int i = 1; i < rows - 1; i++){
+			if(i&1) {
+				ans += 4*tables[i].second;
+			} else {
+				ans += 2*tables[i].second;
+			}
+		}
+
+		return ans * h / 3;
+	}
+};
+
+int main() {
+	int n;
+	cin >> n;
+
+	Simpson1_3Rule sims = (n);
+
+	sims.InputValues();
+
+	cout << sims.calculateValue() << '\n';
+}
