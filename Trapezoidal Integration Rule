@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Trapezoidal{
+private:
+	int rows;
+	vector<pair<double, double>>tables;
+
+public:
+	Trapezoidal(int n) : rows(n) {
+		tables.resize(rows);
+	}
+
+	void InputValues() {
+		for(int i = 0;i < rows; i++) {
+			cin >> tables[i].first;
+			cin >> tables[i].second;
+		}
+	}
+
+	double calculateValue() {
+		double h = (tables[rows-1].first - tables[0].first) / (rows-1);
+
+		double ans = (tables[rows-1].second + tables[0].second) / 2.0;
+
+		for(int i = 1; i < rows - 1; i++){
+			ans += tables[i].second;
+		}
+
+		return ans * h;
+	}
+};
+
+int main() {
+	int n;
+	cin >> n;
+
+	Trapezoidal trap = (n+1);
+
+	trap.InputValues();
+
+	cout << trap.calculateValue() << '\n';
+}
