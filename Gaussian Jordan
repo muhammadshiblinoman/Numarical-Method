@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class GaussJordan{
+private:
+    int rows, cols;
+    vector<vector<double>>matrix;
+public:
+    GaussJordan(int n) : rows(n), cols(n+1) {
+        matrix.resize(rows, vector<double>(cols, 0.0));
+    }
+
+    void inputMatrix() {
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++) {
+                cin >> matrix[i][j];
+            }
+        }
+    }
+
+    void Elemination() {
+        for (int i = 0; i < rows; i++) {
+            double diagElement = matrix[i][i];
+
+            if (diagElement == 0) {
+                cout << "Mathematical Error! Division by zero." << '\n';
+                return;
+            }
+
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] /= diagElement;
+            }
+
+            for (int k = 0; k < rows; k++) {
+                if (k != i) {
+                    double factor = matrix[k][i];
+                    for (int j = 0; j < cols; j++) {
+                        matrix[k][j] -= factor * matrix[i][j];
+                    }
+                }
+            }
+        }
+    }
+
+    void PrintOutput() {
+        for (int i = 0; i < rows; i++) {
+            cout << "x" << i + 1 << " = " << matrix[i][rows] << '\n';
+        }
+    }
+};
+
+int main() {
+    int n;
+    cin >> n;
+
+    GaussJordan jordan = (n);
+    jordan.inputMatrix();
+
+    jordan.Elemination();
+    jordan.PrintOutput();
+}
