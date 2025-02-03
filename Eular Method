@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class EularMethod{
+private:
+    double x0;
+    double y0;
+    double h;
+    int n;
+
+public:
+    EularMethod(double a, double b, double c, int x) {
+        x0 = a; y0 = b; h = c; n = x;
+    }
+
+    double Function(double y) {
+        return -y;  // dy/dx = -y.
+    }
+
+    void Elemination() {
+        while(n--) {
+            y0 = y0 + h * Function(y0);
+            cout << y0 << '\n';
+        }
+    }
+
+};
+
+
+
+int main() {
+    double x0, y0, h;
+    cin >> x0 >> y0 >> h;
+
+    int n;
+    cin >> n;
+
+    EularMethod eular = EularMethod(x0, y0, h, n);
+    eular.Elemination();
+}
